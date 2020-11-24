@@ -5,8 +5,12 @@ var fs = require('fs');
 app.set('view engine', 'pug');
 app.set('views','./views');
 
-app.get('/matches/:start/:stop', function(req, res){
-   var profiles = JSON.parse(fs.readFileSync('./profiles.json', 'utf8')).slice(req.params.start, req.params.stop);
+app.get('/matches/:user/:start/:stop', function(req, res){
+   let inFile = './avin_profiles.json';
+   if (req.params.user === 'kr'){
+      inFile = './kr_profiles.json';
+   }
+   var profiles = JSON.parse(fs.readFileSync(inFile, 'utf8')).slice(req.params.start, req.params.stop);
    profiles = profiles.filter(p => p.PHOTOS.length != 0);
    res.render('match_view', {
       start: req.params.start,
