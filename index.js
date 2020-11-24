@@ -13,4 +13,4 @@ app.get('/matches/:start/:stop', function(req, res){
       profiles: profiles
    });
 });
-app.listen(8080);
+app.listen(process.env.PORT || 5000);
