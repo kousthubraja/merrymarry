@@ -1,0 +1,8 @@
+doctype html
+html
+   head
+      title='Start ' + start
+   body
+      each p in profiles
+         a(href='https://matches.keralamatrimony.com/matches/viewprofile/'+p.MATRIID)
+            img(src=p.PHOTOS[0])
