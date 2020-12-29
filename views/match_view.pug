@@ -4,5 +4,13 @@ html
       title='Start ' + start
    body
       each p in profiles
-         a(href='https://matches.keralamatrimony.com/matches/viewprofile/'+p.MATRIID, target='_blank')
-            img(src=p.PHOTOS[0])
+         table(border=1, style="margin:5px;float:left")
+            tr
+               td
+                  a(href='https://matches.keralamatrimony.com/matches/viewprofile/'+p.MATRIID, target='_blank')
+                     img(src=p.PHOTOS[0])
+            tr
+               td
+                  div=p.NAME+', '+p.AGE+', '+p.HEIGHT
+                  div=p.CITY+', '+p.CASTE
+                  div=p.EMPLOYEDIN
