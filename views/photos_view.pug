@@ -3,6 +3,13 @@ html
    head
       title='MerryMarry'
    body
-      each photo_url in photos
-         div(style="margin:5px;float:left")
-            img(src=photo_url)
+      div
+         each photo_url in photos
+            div(style="display:flex;flex-direction:column;margin:5px;float:left")
+               img(src=photo_url)
+      div
+         table
+            each val, key in details
+               tr
+                  th(align='left')=key
+                  td=val

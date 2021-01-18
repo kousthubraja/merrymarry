@@ -31,7 +31,7 @@ router.get('/:user', function (req, res) {
     });
 });
 
-router.get('/photos/:MID', function (req, res) {
+router.get('/details/:MID', function (req, res) {
     const MID = req.params.MID;
 
     var query = { MATRIID: MID };
@@ -43,13 +43,30 @@ router.get('/photos/:MID', function (req, res) {
         dbo.collection("profiles").find(query).toArray(function (err, result) {
             if (err) throw err;
             res.render('photos_view', {
-                photos: result[0]['PHOTOS']
-                // photos: ['a', 'b', 'c']
+                photos: result[0]['PHOTOS'],
+                details: formatDetailForDisplay(result[0])
             });
             db.close();
         });
     });
 });
+
+function formatDetailForDisplay(details) {
+    let newDetails = {};
+    Object.keys(details).map(function(key, index) {
+        newDetails[toTitleCase(key)] = details[key];
+    });
+    return newDetails;
+}
+
+function toTitleCase(str) {
+    return str.replace(
+        /\w\S*/g,
+        function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+    );
+}
 
 //export this router to use in our index.js
 module.exports = router;
