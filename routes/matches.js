@@ -31,8 +31,24 @@ router.get('/:user', function (req, res) {
     });
 });
 
-router.post('/', function (req, res) {
-    res.send('POST route on things.');
+router.get('/photos/:MID', function (req, res) {
+    const MID = req.params.MID;
+
+    var query = { MATRIID: MID };
+
+    MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("merrymarry");
+
+        dbo.collection("profiles").find(query).toArray(function (err, result) {
+            if (err) throw err;
+            res.render('photos_view', {
+                photos: result[0]['PHOTOS']
+                // photos: ['a', 'b', 'c']
+            });
+            db.close();
+        });
+    });
 });
 
 //export this router to use in our index.js
