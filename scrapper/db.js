@@ -28,5 +28,19 @@ function getProfilesForUser (user) {
   });
 }
 
+function clearDb () {
+  MongoClient.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("merrymarry");
+    
+    var query = { _user: "kr"};
+    dbo.collection("profiles").deleteMany(query, function(err, obj) {
+      if (err) throw err;
+      console.log(obj.result.n + " document(s) deleted");
+      db.close();
+    });
+  });
+}
+
 // insertProfiles ('kr', [{name: 'K', address: 'Somewhere'}, {name: 'K2', address: 'Somewhere else'}]);
-module.exports = {insertProfiles: insertProfiles, getProfilesForUser: getProfilesForUser};
+module.exports = {insertProfiles: insertProfiles, getProfilesForUser: getProfilesForUser, clearDb: clearDb};
